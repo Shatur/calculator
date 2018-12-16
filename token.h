@@ -31,7 +31,7 @@ public:
         Cosec,
     };
 
-    explicit Token(Type type, double value = 0, const std::string name = "");
+    Token(Type type, double value = 0, const std::string name = "");
 
     Type type() const;
     void setType(const Type &type);

@@ -9,7 +9,7 @@
 class TokenStream
 {
 public:
-    TokenStream(const std::string &expression);
+    explicit TokenStream(const std::string &expression);
 
     Token get();
     void unget(int count);
