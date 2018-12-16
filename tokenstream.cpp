@@ -60,11 +60,11 @@ Token TokenStream::get()
             // Constants
             if (text.substr(0, 1) == "e") {
                 m_stream.seekg(1 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Variable, 2.7182818284590452);
+                return Token(Token::Variable, 2.7182818284590452, "e");
             }
             if (text.substr(0, 2) == "pi") {
                 m_stream.seekg(2 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Variable, 3.1415926535897932);
+                return Token(Token::Variable, 3.1415926535897932, "pi");
             }
 
             // Trigonometric functions
@@ -94,16 +94,16 @@ Token TokenStream::get()
             }
 
             // Return string
-            m_stream.seekg(1 - static_cast<int>(text.size()), std::ios_base::cur);
+            m_stream.seekg(-static_cast<int>(text.size()), std::ios_base::cur);
         }
 
         return Token(Token::Null);
     }
 }
 
-void TokenStream::unget()
+void TokenStream::unget(int count)
 {
-    m_stream.unget();
+    m_stream.seekg(-count, std::ios_base::cur);
 }
 
 long TokenStream::position()

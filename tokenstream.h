@@ -12,7 +12,7 @@ public:
     TokenStream(const std::string &expression);
 
     Token get();
-    void unget();
+    void unget(int count);
     long position();
 
 private:

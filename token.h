@@ -1,6 +1,8 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <string>
+
 class Token
 {
 public:
@@ -29,7 +31,7 @@ public:
         Cosec,
     };
 
-    explicit Token(Type type, double value = 0);
+    explicit Token(Type type, double value = 0, const std::string name = "");
 
     Type type() const;
     void setType(const Type &type);
@@ -37,9 +39,15 @@ public:
     double value() const;
     void setValue(double m_value);
 
+    std::string name() const;
+    void setName(const std::string &name);
+
+    int size();
+
 private:
     Type m_type;
     double m_value;
+    std::string m_name;
 };
 
 #endif // TOKEN_H

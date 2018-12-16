@@ -34,10 +34,8 @@ int main() {
 
             while (stream.position() != -1) {
                 // Get delimeter
-                if (stream.get().type() != Token::Delimeter) {
-                    stream.unget();
+                if (stream.get().type() != Token::Delimeter)
                     throw runtime_error("Unexcepted symbol");
-                }
 
                 answers.push_back(expression(&stream));
             }
@@ -97,7 +95,6 @@ double primary(TokenStream *stream)
     case Token::Number:
         return token.value();
     default:
-        stream->unget();
         throw runtime_error("Expected number");
     }
 }
@@ -168,7 +165,7 @@ double term(TokenStream *stream)
             token = stream->get();
             break;
         default:
-            stream->unget();
+            stream->unget(token.size());
             return left;
         }
     }
@@ -190,7 +187,7 @@ double expression(TokenStream *stream)
             token = stream->get();
             break;
         default:
-            stream->unget();
+            stream->unget(token.size());
             return left;
         }
     }
