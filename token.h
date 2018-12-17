@@ -11,8 +11,10 @@ public:
 
         Number,
         Variable,
+        UndefinedVariable,
 
         // Operations
+        Assignment,
         LeftBrace,
         RightBrace,
         Plus,
@@ -31,7 +33,7 @@ public:
         Cosec,
     };
 
-    Token(Type type, double value = 0, const std::string name = "");
+    Token(Type type, double value = 0, std::string name = "");
 
     Type type() const;
     void setType(const Type &type);
@@ -42,7 +44,7 @@ public:
     std::string name() const;
     void setName(const std::string &name);
 
-    int size();
+    int size() const;
 
 private:
     Type m_type;
