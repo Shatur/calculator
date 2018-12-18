@@ -1,5 +1,5 @@
 # Qt Creator project properties
-CMakeLists.txt.user
+source/CMakeLists.txt.user
 
 # Plasma directory settings
 *.directory
