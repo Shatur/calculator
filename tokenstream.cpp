@@ -27,6 +27,8 @@ Token TokenStream::get()
     switch (token) {
     case '=':
         return Token(Token::Assignment);
+    case ',':
+        return Token(Token::Delimeter);
     case '(':
         return Token(Token::LeftBrace);
     case ')':
@@ -41,8 +43,8 @@ Token TokenStream::get()
         return Token(Token::Division);
     case '%':
         return Token(Token::DivisionRemainder);
-    case ',':
-        return Token(Token::Delimeter);
+    case '^':
+        return Token(Token::Exponentiation);
     case '.':
     case '0':
     case '1':

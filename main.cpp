@@ -53,6 +53,9 @@ double primary(TokenStream &stream)
     Token token = stream.get();
 
     switch (token.type()) {
+    case Token::Variable:
+    case Token::Number:
+        return token.value();
     case Token::LeftBrace:
     {
         double braceExpression = expression(stream);
@@ -77,9 +80,6 @@ double primary(TokenStream &stream)
         return - primary(stream);
     case Token::Plus:
         return + primary(stream);
-    case Token::Variable:
-    case Token::Number:
-        return token.value();
     case Token::UndefinedVariable:
         throw ParseError("Undefined variable", stream.position() - token.size() + 1);
     default:
@@ -94,6 +94,10 @@ double term(TokenStream &stream)
 
     while (true) {
         switch (token.type()) {
+        case Token::Variable:
+            left *= token.value();
+            token = stream.get();
+            break;
         case Token::LeftBrace:
         {
             double braceExpression = expression(stream);
@@ -148,8 +152,8 @@ double term(TokenStream &stream)
             token = stream.get();
             break;
         }
-        case Token::Variable:
-            left *= token.value();
+        case Token::Exponentiation:
+            left = pow(left, primary(stream));
             token = stream.get();
             break;
         case Token::UndefinedVariable:

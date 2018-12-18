@@ -12,6 +12,7 @@ public:
         Number,
         Variable,
         UndefinedVariable,
+        Delimeter,
 
         // Operations
         Assignment,
@@ -22,7 +23,7 @@ public:
         Multiplication,
         Division,
         DivisionRemainder,
-        Delimeter,
+        Exponentiation,
 
         // Trigonometric functions
         Sin,
