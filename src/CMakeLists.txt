@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(Calc)
+project(Calculator)
 set(CMAKE_CXX_STANDARD 17)
 
 set(sources
