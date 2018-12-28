@@ -22,7 +22,7 @@ Token TokenStream::get()
     m_stream >> token;
 
     if (m_stream.fail())
-        return Token(Token::Null);
+        return Token(Token::Empty);
 
     switch (token) {
     case '=':
@@ -85,54 +85,53 @@ Token TokenStream::get()
 
     }
     default:
-        if (isalpha(token)) {
-            string text;
-            m_stream.unget();
-            m_stream >> text;
+        if (!isalpha(token))
+            return Token(Token::Unknown);
 
-            // Trigonometric functions
-            if (text.substr(0, 3) == "sin") {
-                m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Sin);
-            }
-            if (text.substr(0, 3) == "cos") {
-                m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Cos);
-            }
-            if (text.substr(0, 2) == "tg") {
-                m_stream.seekg(2 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Tg);
-            }
-            if (text.substr(0, 3) == "ctg") {
-                m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Ctg);
-            }
-            if (text.substr(0, 3) == "sec") {
-                m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Sec);
-            }
-            if (text.substr(0, 5) == "cosec") {
-                m_stream.seekg(5 - static_cast<int>(text.size()), std::ios_base::cur);
-                return Token(Token::Cosec);
-            }
+        string text;
+        m_stream.unget();
+        m_stream >> text;
 
-            // Search for end of variable (Example: return 's_var1' if text is 's_var1=64')
-            unsigned long endOfVariable = text.size(); // End of text by default
-            for (unsigned long i = 0; i < text.size(); ++i) {
-                const char symbol = text.at(i);
-                if (!isdigit(symbol)
-                        && !isalpha(symbol)
-                        && (symbol != '_' || i == 0)) {
-                    endOfVariable = i;
-                    m_stream.seekg(static_cast<int>(endOfVariable - text.size()), std::ios_base::cur);
-                    break;
-                }
-            }
-
-            return variable(text.substr(0, endOfVariable));
+        // Trigonometric functions
+        if (text.substr(0, 3) == "sin") {
+            m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
+            return Token(Token::Sin);
+        }
+        if (text.substr(0, 3) == "cos") {
+            m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
+            return Token(Token::Cos);
+        }
+        if (text.substr(0, 2) == "tg") {
+            m_stream.seekg(2 - static_cast<int>(text.size()), std::ios_base::cur);
+            return Token(Token::Tg);
+        }
+        if (text.substr(0, 3) == "ctg") {
+            m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
+            return Token(Token::Ctg);
+        }
+        if (text.substr(0, 3) == "sec") {
+            m_stream.seekg(3 - static_cast<int>(text.size()), std::ios_base::cur);
+            return Token(Token::Sec);
+        }
+        if (text.substr(0, 5) == "cosec") {
+            m_stream.seekg(5 - static_cast<int>(text.size()), std::ios_base::cur);
+            return Token(Token::Cosec);
         }
 
-        return Token(Token::Null);
+        // Search for end of variable (Example: return 's_var1' if text is 's_var1=64')
+        unsigned long endOfVariable = text.size(); // End of text by default
+        for (unsigned long i = 0; i < text.size(); ++i) {
+            const char symbol = text.at(i);
+            if (!isdigit(symbol)
+                    && !isalpha(symbol)
+                    && (symbol != '_' || i == 0)) {
+                endOfVariable = i;
+                m_stream.seekg(static_cast<int>(endOfVariable - text.size()), std::ios_base::cur);
+                break;
+            }
+        }
+
+        return variable(text.substr(0, endOfVariable));
     }
 }
 

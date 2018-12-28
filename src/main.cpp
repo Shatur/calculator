@@ -195,7 +195,7 @@ double statement(TokenStream &stream) {
     {
         const Token nextToken = stream.get();
         if (nextToken.type() != Token::Assignment) {
-            if (nextToken.type() == Token::Null)
+            if (nextToken.type() == Token::Empty)
                 throw ParseError("Excepted assignment", stream.position() + 1);
             throw ParseError("Excepted assignment", stream.position());
         }
@@ -229,7 +229,7 @@ vector<double> command(TokenStream &stream) {
 
     // Parse other commands
     Token token = stream.get();
-    while (token.type() != Token::Null) {
+    while (token.type() != Token::Empty) {
         if (token.type() != Token::Delimeter)
             throw ParseError("Unexcepted symbol", stream.position());
 

@@ -7,7 +7,8 @@ class Token
 {
 public:
     enum Type {
-        Null = -1,
+        Unknown = -1,
+        Empty,
 
         Number,
         Variable,
