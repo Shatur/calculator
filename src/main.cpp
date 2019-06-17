@@ -131,6 +131,10 @@ double term(TokenStream &stream)
             left *= 1 / sin(primary(stream));
             token = stream.get();
             break;
+        case Token::Exponentiation:
+            left = pow(left, primary(stream));
+            token = stream.get();
+            break;
         case Token::Multiplication:
             left *= primary(stream);
             token = stream.get();
@@ -153,10 +157,6 @@ double term(TokenStream &stream)
             token = stream.get();
             break;
         }
-        case Token::Exponentiation:
-            left = pow(left, primary(stream));
-            token = stream.get();
-            break;
         case Token::UndefinedVariable:
             throw ParseError("Undefined variable", stream.position() - token.size() + 1);
         default:
