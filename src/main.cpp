@@ -14,7 +14,8 @@ double expression(TokenStream &stream);
 double statement(TokenStream &stream);
 vector<double> command(TokenStream &stream);
 
-int main() {
+int main()
+{
     cout.precision(numeric_limits<double>::max_digits10); // Set max preception
 
     string input;
@@ -58,7 +59,7 @@ double primary(TokenStream &stream)
         return token.value();
     case Token::LeftBrace:
     {
-        double braceExpression = expression(stream);
+        const double braceExpression = expression(stream);
         token = stream.get();
         if (token.type() != Token::RightBrace)
             throw ParseError("Excepted brace", stream.position() + token.size());
@@ -100,7 +101,7 @@ double term(TokenStream &stream)
             break;
         case Token::LeftBrace:
         {
-            double braceExpression = expression(stream);
+            const double braceExpression = expression(stream);
             token = stream.get();
             if (token.type() != Token::RightBrace)
                 throw ParseError("Excepted brace", stream.position() + token.size());
@@ -136,7 +137,7 @@ double term(TokenStream &stream)
             break;
         case Token::Division:
         {
-            double right = primary(stream);
+            const double right = primary(stream);
             if (right == 0.0)
                 throw ParseError("Division by zero", stream.position());
             left /= right;
@@ -145,7 +146,7 @@ double term(TokenStream &stream)
         }
         case Token::DivisionRemainder:
         {
-            double right = primary(stream);
+            const double right = primary(stream);
             if (right == 0.0)
                 throw ParseError("Division by zero", stream.position());
             left = fmod(left, right);
@@ -187,8 +188,9 @@ double expression(TokenStream &stream)
     }
 }
 
-double statement(TokenStream &stream) {
-    Token token = stream.get();
+double statement(TokenStream &stream)
+{
+    const Token token = stream.get();
 
     switch (token.type()) {
     case Token::UndefinedVariable:
@@ -223,7 +225,8 @@ double statement(TokenStream &stream) {
     }
 }
 
-vector<double> command(TokenStream &stream) {
+vector<double> command(TokenStream &stream)
+{
     vector<double> answers;
     answers.push_back(statement(stream)); // Parse first expression
 
