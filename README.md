@@ -19,18 +19,18 @@ A console application for mathematical calculations using parsing. Created for e
 
 > x
    ^
-Excepted assignment at: 2
+Expected assignment at: 2
 
 > (3+3
       ^
-Excepted brace at: 5
+Expected brace at: 5
 
 > sin3 
 = 0.14112000805986721
 
 > sin(3+4
          ^
-Excepted brace at: 8
+Expected brace at: 8
 
 > e 
 = 2.7182818284590451

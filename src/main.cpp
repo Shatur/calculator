@@ -62,7 +62,7 @@ double primary(TokenStream &stream)
         const double braceExpression = expression(stream);
         token = stream.get();
         if (token.type() != Token::RightBrace)
-            throw ParseError("Excepted brace", stream.position() + token.size());
+            throw ParseError("Expected brace", stream.position() + token.size());
         return braceExpression;
     }
     case Token::Sin:
@@ -104,7 +104,7 @@ double term(TokenStream &stream)
             const double braceExpression = expression(stream);
             token = stream.get();
             if (token.type() != Token::RightBrace)
-                throw ParseError("Excepted brace", stream.position() + token.size());
+                throw ParseError("Expected brace", stream.position() + token.size());
             return left * braceExpression;
         }
         case Token::Sin:
@@ -198,8 +198,8 @@ double statement(TokenStream &stream)
         const Token nextToken = stream.get();
         if (nextToken.type() != Token::Assignment) {
             if (nextToken.type() == Token::Empty)
-                throw ParseError("Excepted assignment", stream.position() + 1);
-            throw ParseError("Excepted assignment", stream.position());
+                throw ParseError("Expected assignment", stream.position() + 1);
+            throw ParseError("Expected assignment", stream.position());
         }
 
         const double value = expression(stream);
